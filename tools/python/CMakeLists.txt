@@ -14,8 +14,13 @@ if(DEFINED ANDROID_PLATFORM)
     elseif(ANDROID_ABI STREQUAL "x86_64")
         add_compile_options(-march=atom -m64 -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mfpmath=sse)
     endif()
+    if(CMAKE_BUILD_TYPE STREQUAL "Release")
+        add_compile_options(-Ofast -g0) # [IGE]: no debug info, reduce lib size
+    else(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        add_compile_options(-Os)
+    endif()
 elseif(MSVC)
-    add_compile_options(/MP)
+    add_compile_options(/MP /O2 /Ot)
 endif()
 # [/IGE]
 
@@ -105,7 +110,7 @@ if (DEFINED PYTHON_EXECUTABLE)
    # Set the output library name to dlib because that's what setup.py and distutils expects.
    set_target_properties(dlib_python PROPERTIES OUTPUT_NAME dlib)
 else()
-   pybind11_add_module(dlib_python STATIC ${python_srcs})   
-   target_link_libraries(dlib_python PRIVATE dlib)
+   pybind11_add_module(dlib_python STATIC ${python_srcs})
+   target_link_libraries(dlib_python PRIVATE dlib::dlib)
 endif()
 # [/IGE]

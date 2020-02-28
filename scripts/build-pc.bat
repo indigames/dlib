@@ -58,17 +58,17 @@ echo Compiling x86...
         cmake --build . --config Debug -- -m
         if %ERRORLEVEL% NEQ 0 goto ERROR
         xcopy /q /s /y Debug\*.lib %OUTPUT_LIBS_DEBUG%\x86\
-        xcopy /q /s /y Debug\*.dll %OUTPUT_LIBS_DEBUG%\x86\
+        xcopy /q /s /y dlib_build\Debug\*.lib %OUTPUT_LIBS_DEBUG%\x86\
+    
     )
-
     echo Compiling x86 - Release...
     cmake --build . --config Release -- -m
     if %ERRORLEVEL% NEQ 0 goto ERROR
-    xcopy /q /s /y Release\*.lib %OUTPUT_LIBS_RELEASE%\x86\
-    xcopy /q /s /y Release\*.dll %OUTPUT_LIBS_RELEASE%\x86\
+    xcopy /q /s /y Release\*.lib %OUTPUT_LIBS_RELEASE%\x86\ 
+    xcopy /q /s /y dlib_build\Release\*.lib %OUTPUT_LIBS_RELEASE%\x86\
 
     echo Fetching latest generated header for python binding...
-    xcopy /q /s /y %BUILD_DIR%\x86\modules\python_bindings_generator\*.h %PROJECT_DIR%\modules\python_bindings_generator\    
+    xcopy /q /s /y %BUILD_DIR%\x86\modules\python_bindings_generator\*.h %PROJECT_DIR%\modules\python_bindings_generator\
 echo Compiling x86 DONE
 
 cd %PROJECT_DIR%
@@ -86,14 +86,14 @@ echo Compiling x64...
         cmake --build . --config Debug -- -m
         if %ERRORLEVEL% NEQ 0 goto ERROR
         xcopy /q /s /y Debug\*.lib %OUTPUT_LIBS_DEBUG%\x64\
-        xcopy /q /s /y Debug\*.dll %OUTPUT_LIBS_DEBUG%\x64\
+        xcopy /q /s /y dlib_build\Debug\*.lib %OUTPUT_LIBS_DEBUG%\x64\
     )
 
     echo Compiling x64 - Release...
     cmake --build . --config Release -- -m
     if %ERRORLEVEL% NEQ 0 goto ERROR
     xcopy /q /s /y Release\*.lib %OUTPUT_LIBS_RELEASE%\x64\
-    xcopy /q /s /y Release\*.dll %OUTPUT_LIBS_RELEASE%\x64\
+    xcopy /q /s /y dlib_build\Release\*.lib %OUTPUT_LIBS_RELEASE%\x64\
 echo Compiling x64 DONE
 
 goto ALL_DONE

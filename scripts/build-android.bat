@@ -84,7 +84,7 @@ echo Compiling armeabi-v7a...
         cmake --build .
         if %ERRORLEVEL% NEQ 0 goto ERROR
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\armeabi-v7a\
-        xcopy /q /y *.so %OUTPUT_LIBS_DEBUG%\armeabi-v7a\
+        xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\armeabi-v7a\
     )
     
     if not exist %BUILD_DIR%\armeabi-v7a\Release (
@@ -98,8 +98,7 @@ echo Compiling armeabi-v7a...
     cmake --build .
     if %ERRORLEVEL% NEQ 0 goto ERROR
     xcopy /q /y *.a %OUTPUT_LIBS_RELEASE%\armeabi-v7a\
-    xcopy /q /y *.so %OUTPUT_LIBS_RELEASE%\armeabi-v7a\
-	goto ALL_DONE
+    xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_RELEASE%\armeabi-v7a\
 echo Compiling armeabi-v7a DONE
 
 cd %PROJECT_DIR%
@@ -117,7 +116,7 @@ echo Compiling arm64-v8a...
         cmake --build .
         if %ERRORLEVEL% NEQ 0 goto ERROR
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\arm64-v8a\
-        xcopy /q /y *.so %OUTPUT_LIBS_DEBUG%\arm64-v8a\
+        xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\arm64-v8a\
     )
     
     if not exist %BUILD_DIR%\arm64-v8a\Release (
@@ -131,7 +130,7 @@ echo Compiling arm64-v8a...
     cmake --build .
     if %ERRORLEVEL% NEQ 0 goto ERROR
     xcopy /q /y *.a %OUTPUT_LIBS_RELEASE%\arm64-v8a\
-    xcopy /q /y *.so %OUTPUT_LIBS_RELEASE%\arm64-v8a\
+    xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_RELEASE%\arm64-v8a\
 echo Compiling arm64-v8a DONE
 
 cd %PROJECT_DIR%
@@ -149,7 +148,7 @@ echo Compiling x86...
         cmake --build .
         if %ERRORLEVEL% NEQ 0 goto ERROR
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\x86\
-        xcopy /q /y *.so %OUTPUT_LIBS_DEBUG%\x86\
+        xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\x86\
     )
     
     if not exist %BUILD_DIR%\x86\Release (
@@ -163,7 +162,7 @@ echo Compiling x86...
     cmake --build .
     if %ERRORLEVEL% NEQ 0 goto ERROR
     xcopy /q /y *.a %OUTPUT_LIBS_RELEASE%\x86\
-    xcopy /q /y *.so %OUTPUT_LIBS_RELEASE%\x86\
+    xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_RELEASE%\x86\
 echo Compiling x86 DONE
 
 cd %PROJECT_DIR%
@@ -181,7 +180,7 @@ echo Compiling x86_64...
         cmake --build .
         if %ERRORLEVEL% NEQ 0 goto ERROR
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\x86_64\
-        xcopy /q /y *.so %OUTPUT_LIBS_DEBUG%\x86_64\
+        xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\x86_64\
     )
     
     if not exist %BUILD_DIR%\x86_64\Release (
@@ -195,7 +194,7 @@ echo Compiling x86_64...
     cmake --build .
     if %ERRORLEVEL% NEQ 0 goto ERROR
     xcopy /q /y *.a %OUTPUT_LIBS_RELEASE%\x86_64\
-    xcopy /q /y *.so %OUTPUT_LIBS_RELEASE%\x86_64\
+    xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_RELEASE%\x86_64\
 echo Compiling x86_64 DONE
 
 goto ALL_DONE
