@@ -2,6 +2,36 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 project(dlib_python_bindings)
 
+# [IGE]: tweaks for platforms
+if(DEFINED ANDROID_PLATFORM)
+    set (ANDROID 1)
+    if(ANDROID_ABI STREQUAL "armeabi-v7a")
+        add_compile_options(-marm -march=armv7-a -mtune=cortex-a15 -mfpu=neon-fp16 -mfloat-abi=softfp)
+    elseif(ANDROID_ABI STREQUAL "x86")
+        add_compile_options(-march=atom -m32 -msse -msse2 -msse3 -mssse3 -mfpmath=sse -mstackrealign)
+    elseif(ANDROID_ABI STREQUAL "arm64-v8a")
+        add_compile_options(-march=armv8-a+simd+sve -mtune=cortex-a53 -D__ARM_NEON -D__ARM_NEON__)
+    elseif(ANDROID_ABI STREQUAL "x86_64")
+        add_compile_options(-march=atom -m64 -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mfpmath=sse)
+    endif()
+elseif(MSVC)
+    add_compile_options(/MP)
+endif()
+# [/IGE]
+
+# [IGE]: build static python binding
+set (PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/Include")
+if (MSVC)
+    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/PC")
+elseif (OSX)
+    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/Mac")
+elseif (ANDROID)
+    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/Android")
+elseif (IOS)
+    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/IOS")
+endif ()
+# [/IGE]
+
 # Pybind11's cmake scripts enable link time optimization by default.  However,
 # it makes linking take a really long time and doesn't seem to substantively
 # improve runtime performance.  So we disable LTO here to make building dlib
@@ -68,8 +98,14 @@ if(NOT ${DLIB_NO_GUI_SUPPORT})
    list(APPEND python_srcs src/gui.cpp)
 endif()
 
-pybind11_add_module(dlib_python ${python_srcs})
-target_link_libraries(dlib_python PRIVATE dlib::dlib)
-# Set the output library name to dlib because that's what setup.py and distutils expects.
-set_target_properties(dlib_python PROPERTIES OUTPUT_NAME dlib)
-
+# [IGE]: if not defined python.exe, then build static
+if (DEFINED PYTHON_EXECUTABLE)
+   pybind11_add_module(dlib_python ${python_srcs})
+   target_link_libraries(dlib_python PRIVATE dlib::dlib)
+   # Set the output library name to dlib because that's what setup.py and distutils expects.
+   set_target_properties(dlib_python PROPERTIES OUTPUT_NAME dlib)
+else()
+   pybind11_add_module(dlib_python STATIC ${python_srcs})   
+   target_link_libraries(dlib_python PRIVATE dlib)
+endif()
+# [/IGE]

@@ -50,6 +50,13 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #=============================================================================
 
+# [IGE]: If defined include dir, then found
+if(DEFINED PYTHON_INCLUDE_DIRS)
+    set(PYTHONLIBS_FOUND TRUE)
+    return()
+endif()
+# [/IGE]
+
 # Checking for the extension makes sure that `LibsNew` was found and not just `Libs`.
 if(PYTHONLIBS_FOUND AND PYTHON_MODULE_EXTENSION)
     return()

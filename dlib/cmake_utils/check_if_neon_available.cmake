@@ -2,6 +2,13 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
+# [IGE]: Enable NEON on Android ARM without test
+if((ANDROID_ABI STREQUAL "armeabi-v7a") OR (ANDROID_ABI STREQUAL "arm64-v8a"))
+  set(ARM_NEON_IS_AVAILABLE 1)
+  return()
+endif()
+# [/IGE]
+
 # Don't rerun this script if its already been executed.
 if (DEFINED ARM_NEON_IS_AVAILABLE)
    return()
