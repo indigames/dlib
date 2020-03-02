@@ -3,7 +3,8 @@ setlocal enabledelayedexpansion
 
 SET LIB_NAME=dlib
 
-SET BUILD_DEBUG=0
+SET BUILD_DEBUG=%BUILD_DEBUG%
+
 echo COMPILING ...
 SET PROJECT_DIR=%~dp0..
 SET PROJECT_CMAKE_DIR=%PROJECT_DIR%\tools\python
@@ -86,7 +87,7 @@ echo Compiling armeabi-v7a...
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\armeabi-v7a\
         xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\armeabi-v7a\
     )
-    
+
     if not exist %BUILD_DIR%\armeabi-v7a\Release (
         mkdir %BUILD_DIR%\armeabi-v7a\Release
     )
@@ -118,7 +119,7 @@ echo Compiling arm64-v8a...
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\arm64-v8a\
         xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\arm64-v8a\
     )
-    
+
     if not exist %BUILD_DIR%\arm64-v8a\Release (
         mkdir %BUILD_DIR%\arm64-v8a\Release
     )
@@ -150,7 +151,7 @@ echo Compiling x86...
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\x86\
         xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\x86\
     )
-    
+
     if not exist %BUILD_DIR%\x86\Release (
         mkdir %BUILD_DIR%\x86\Release
     )
@@ -182,7 +183,7 @@ echo Compiling x86_64...
         xcopy /q /y *.a %OUTPUT_LIBS_DEBUG%\x86_64\
         xcopy /q /y dlib_build\*.a %OUTPUT_LIBS_DEBUG%\x86_64\
     )
-    
+
     if not exist %BUILD_DIR%\x86_64\Release (
         mkdir %BUILD_DIR%\x86_64\Release
     )
@@ -200,8 +201,8 @@ echo Compiling x86_64 DONE
 goto ALL_DONE
 
 :ERROR
-	echo ERROR OCCURED DURING COMPILING
+    echo ERROR OCCURED DURING COMPILING
 
 :ALL_DONE
-	cd %PROJECT_DIR%
-	echo COMPILING DONE!
+    cd %PROJECT_DIR%
+    echo COMPILING DONE!
