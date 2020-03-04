@@ -2,10 +2,10 @@
 
 SET LIB_NAME=dlib
 
-SET BUILD_DEBUG=%BUILD_DEBUG%
+SET BUILD_DEBUG=1
 SET BUILD_X86=%BUILD_X86%
 
-echo COMPILING PC...
+echo COMPILING ...
 SET PROJECT_DIR=%~dp0..
 SET PROJECT_CMAKE_DIR=%PROJECT_DIR%\tools\python
 
@@ -14,6 +14,11 @@ SET OUTPUT_DIR=%PROJECT_DIR%\igeLibs\%LIB_NAME%
 SET OUTPUT_HEADER=%OUTPUT_DIR%\include
 SET OUTPUT_LIBS_DEBUG=%OUTPUT_DIR%\libs\Debug\pc
 SET OUTPUT_LIBS_RELEASE=%OUTPUT_DIR%\libs\Release\pc
+
+rem Clone igeLibs, then set environment variable *IGE_LIBS* point to the cloned directory
+if not exist "%PROJECT_DIR%\igeLibs" (
+    mklink /J "%PROJECT_DIR%\igeLibs" "%IGE_LIBS%"
+)
 
 if not exist %OUTPUT_DIR% (
     mkdir %OUTPUT_DIR%

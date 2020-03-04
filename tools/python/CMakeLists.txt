@@ -15,12 +15,12 @@ if(DEFINED ANDROID_PLATFORM)
         add_compile_options(-march=atom -m64 -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mfpmath=sse)
     endif()
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
-        add_compile_options(-Ofast -g0) # [IGE]: no debug info, reduce lib size
+        add_compile_options(-Ofast)
     else(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        add_compile_options(-Os)
+        add_compile_options(-Og)
     endif()
 elseif(MSVC)
-    add_compile_options(/MP /O2 /Ot)
+    add_compile_options(/MP)
 endif()
 # [/IGE]
 
