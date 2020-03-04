@@ -20,6 +20,11 @@ if not exist "%PROJECT_DIR%\igeLibs" (
     mklink /J "%PROJECT_DIR%\igeLibs" "%IGE_LIBS%"
 )
 
+if not exist "%PROJECT_DIR%\igeLibs" (
+    echo IGE_LIBS was not set, please clone igeLibs and set IGE_LIBS to the cloned path!
+    goto ERROR
+)
+
 if not exist %OUTPUT_DIR% (
     mkdir %OUTPUT_DIR%
 )
