@@ -452,21 +452,23 @@ if (NOT TARGET dlib)
                external/libpng/pngwrite.c
                external/libpng/pngwtran.c
                external/libpng/pngwutil.c
-               external/zlib/adler32.c
-               external/zlib/compress.c
-               external/zlib/crc32.c
-               external/zlib/deflate.c
-               external/zlib/gzclose.c
-               external/zlib/gzlib.c
-               external/zlib/gzread.c
-               external/zlib/gzwrite.c
-               external/zlib/infback.c
-               external/zlib/inffast.c
-               external/zlib/inflate.c
-               external/zlib/inftrees.c
-               external/zlib/trees.c
-               external/zlib/uncompr.c
-               external/zlib/zutil.c
+            # [IGE]: we already build zlib, skips those
+               # external/zlib/adler32.c
+               # external/zlib/compress.c
+               # external/zlib/crc32.c
+               # external/zlib/deflate.c
+               # external/zlib/gzclose.c
+               # external/zlib/gzlib.c
+               # external/zlib/gzread.c
+               # external/zlib/gzwrite.c
+               # external/zlib/infback.c
+               # external/zlib/inffast.c
+               # external/zlib/inflate.c
+               # external/zlib/inftrees.c
+               # external/zlib/trees.c
+               # external/zlib/uncompr.c
+               # external/zlib/zutil.c
+            # [/IGE]
                )
 
             include(cmake_utils/check_if_neon_available.cmake)
@@ -934,19 +936,21 @@ if (NOT TARGET dlib)
 
 endif()
 
-if (MSVC)
-   # Give the output library files names that are unique functions of the
-   # visual studio mode that compiled them.  We do this so that people who
-   # compile dlib and then copy the .lib files around (which they shouldn't be
-   # doing in the first place!) will hopefully be slightly less confused by
-   # what happens since, at the very least, the filenames will indicate what
-   # visual studio runtime they go with.
-   math(EXPR numbits ${CMAKE_SIZEOF_VOID_P}*8)
-   set_target_properties(dlib PROPERTIES DEBUG_POSTFIX "${VERSION}_debug_${numbits}bit_msvc${MSVC_VERSION}")
-   set_target_properties(dlib PROPERTIES RELEASE_POSTFIX "${VERSION}_release_${numbits}bit_msvc${MSVC_VERSION}")
-   set_target_properties(dlib PROPERTIES MINSIZEREL_POSTFIX "${VERSION}_minsizerel_${numbits}bit_msvc${MSVC_VERSION}")
-   set_target_properties(dlib PROPERTIES RELWITHDEBINFO_POSTFIX "${VERSION}_relwithdebinfo_${numbits}bit_msvc${MSVC_VERSION}")
-endif()
+# [IGE]: should use simple name
+# if (MSVC)
+   # # Give the output library files names that are unique functions of the
+   # # visual studio mode that compiled them.  We do this so that people who
+   # # compile dlib and then copy the .lib files around (which they shouldn't be
+   # # doing in the first place!) will hopefully be slightly less confused by
+   # # what happens since, at the very least, the filenames will indicate what
+   # # visual studio runtime they go with.
+   # math(EXPR numbits ${CMAKE_SIZEOF_VOID_P}*8)
+   # set_target_properties(dlib PROPERTIES DEBUG_POSTFIX "${VERSION}_debug_${numbits}bit_msvc${MSVC_VERSION}")
+   # set_target_properties(dlib PROPERTIES RELEASE_POSTFIX "${VERSION}_release_${numbits}bit_msvc${MSVC_VERSION}")
+   # set_target_properties(dlib PROPERTIES MINSIZEREL_POSTFIX "${VERSION}_minsizerel_${numbits}bit_msvc${MSVC_VERSION}")
+   # set_target_properties(dlib PROPERTIES RELWITHDEBINFO_POSTFIX "${VERSION}_relwithdebinfo_${numbits}bit_msvc${MSVC_VERSION}")
+# endif()
+# [/IGE]
 
 # Check if we are being built as part of a pybind11 module. 
 if (COMMAND pybind11_add_module)
