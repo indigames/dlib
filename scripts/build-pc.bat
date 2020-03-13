@@ -12,10 +12,11 @@ SET PROJECT_CMAKE_DIR=%PROJECT_DIR%\tools\python
 SET BUILD_DIR=%PROJECT_DIR%\build\pc
 SET OUTPUT_DIR=%PROJECT_DIR%\igeLibs\%LIB_NAME%
 SET OUTPUT_HEADER=%OUTPUT_DIR%\include
-SET OUTPUT_LIBS_DEBUG=%OUTPUT_DIR%\libs\Debug\pc
-SET OUTPUT_LIBS_RELEASE=%OUTPUT_DIR%\libs\Release\pc
+SET OUTPUT_LIBS_DEBUG=%OUTPUT_DIR%\libs\pc\Debug
+SET OUTPUT_LIBS_RELEASE=%OUTPUT_DIR%\libs\pc\Release
 
-rem Clone igeLibs, then set environment variable *IGE_LIBS* point to the cloned directory
+SET CALL_DIR=%CD%
+
 if not exist "%PROJECT_DIR%\igeLibs" (
     mklink /J "%PROJECT_DIR%\igeLibs" "%IGE_LIBS%"
 )
@@ -115,5 +116,5 @@ goto ALL_DONE
     echo ERROR OCCURED DURING COMPILING!
 
 :ALL_DONE
-    cd %PROJECT_DIR%
+    cd %CALL_DIR%
     echo COMPILING DONE!
