@@ -61,7 +61,7 @@ endif()
 # endif()
 # [/IGE]
 
-add_subdirectory(../../dlib/external/pybind11 pybind11_build)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/pybind11 pybind11_build)
 add_subdirectory(../../dlib dlib_build)
 
 if (USING_OLD_VISUAL_STUDIO_COMPILER)
