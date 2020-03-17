@@ -25,15 +25,18 @@ endif()
 # [/IGE]
 
 # [IGE]: build static python binding
-set (PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/Include")
+if (NOT DEFINED IGE_ROOT)
+  set(IGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+endif()
+set (PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Include")
 if (MSVC)
-    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/PC")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/PC")
 elseif (OSX)
-    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/Mac")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Mac")
 elseif (ANDROID)
-    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/Android")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Android")
 elseif (IOS)
-    list(APPEND PYTHON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/Python/IOS")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/IOS")
 endif ()
 # [/IGE]
 
@@ -61,8 +64,10 @@ endif()
 # endif()
 # [/IGE]
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../igeLibs/pybind11 pybind11_build)
+# [IGE]: use latest pybind11
+add_subdirectory(${IGE_ROOT}/igeLibs/pybind11 pybind11_build)
 add_subdirectory(../../dlib dlib_build)
+# [/IGE]
 
 if (USING_OLD_VISUAL_STUDIO_COMPILER)
    message(FATAL_ERROR "You have to use a version of Visual Studio that supports C++11.  As of December 2017, the only versions that have good enough C++11 support to compile the dlib Python API is a fully updated Visual Studio 2015 or a fully updated Visual Studio 2017.  Older versions of either of these compilers have bad C++11 support and will fail to compile the Python extension. ***SO UPDATE YOUR VISUAL STUDIO TO MAKE THIS ERROR GO AWAY***")
