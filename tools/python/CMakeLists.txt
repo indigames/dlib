@@ -3,6 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 project(dlib_python_bindings)
 
 # [IGE]: tweaks for platforms
+set(CMAKE_CXX_STANDARD 17)
+
 if(DEFINED ANDROID_PLATFORM)
     set (ANDROID 1)
     if(ANDROID_ABI STREQUAL "armeabi-v7a")
