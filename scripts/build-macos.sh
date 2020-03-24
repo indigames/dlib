@@ -38,6 +38,7 @@ fi
 
 [ ! -d "$OUTPUT_DIR/x64" ] && mkdir -p $OUTPUT_DIR/x64
 cp -R -f -p ./Release/*.a $OUTPUT_DIR/x64
+cp -R -f -p ./dlib_build/Release/*.a $OUTPUT_DIR/x64
 cp -R -f -p ./Release/*.so $OUTPUT_DIR/x64
 
 echo DONE!

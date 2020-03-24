@@ -39,6 +39,7 @@ fi
 
 [ ! -d "$OUTPUT_DIR/arm64" ] && mkdir -p $OUTPUT_DIR/arm64
 cp -R -f -p ./Release-iphoneos/*.a $OUTPUT_DIR/arm64
+cp -R -f -p ./dlib_build/Release-iphoneos/*.a $OUTPUT_DIR/arm64
 cp -R -f -p ./Release-iphoneos/*.so $OUTPUT_DIR/arm64
 
 echo DONE!
