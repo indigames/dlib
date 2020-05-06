@@ -2,6 +2,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 project(dlib_python_bindings)
 
+file(TO_CMAKE_PATH $ENV{IGE_LIBS} IGE_LIBS)
+
 # [IGE]: tweaks for platforms
 set(CMAKE_CXX_STANDARD 17)
 
@@ -17,29 +19,28 @@ if(DEFINED ANDROID_PLATFORM)
         add_compile_options(-march=atom -m64 -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mfpmath=sse)
     endif()
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
-        add_compile_options(-Ofast)
+        add_compile_options(-g0 -Ofast)
     else(CMAKE_BUILD_TYPE STREQUAL "Debug")
         add_compile_options(-Og)
     endif()
 elseif(MSVC)
-    add_compile_options(/MP)
+    add_compile_options(/MP /O1 /Os /Oy /GR- /EHs-c- /Oi /Zl)
 endif()
 # [/IGE]
 
 # [IGE]: build static python binding
-if (NOT DEFINED IGE_ROOT)
-  set(IGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-endif()
-set (PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Include")
+set (PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Include")
 if (MSVC)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/PC")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/PC")
 elseif (OSX)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Mac")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Mac")
 elseif (ANDROID)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Android")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Android")
 elseif (IOS)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/IOS")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/IOS")
 endif ()
+
+set(DLIB_NO_GUI_SUPPORT ON)
 # [/IGE]
 
 # Pybind11's cmake scripts enable link time optimization by default.  However,
@@ -67,7 +68,7 @@ endif()
 # [/IGE]
 
 # [IGE]: use latest pybind11
-add_subdirectory(${IGE_ROOT}/igeLibs/pybind11 pybind11_build)
+add_subdirectory(${IGE_LIBS}/pybind11 pybind11_build)
 add_subdirectory(../../dlib dlib_build)
 # [/IGE]
 
