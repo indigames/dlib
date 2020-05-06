@@ -25,6 +25,10 @@ if(DEFINED ANDROID_PLATFORM)
     endif()
 elseif(MSVC)
     add_compile_options(/MP /O1 /Os /Oy /GR- /EHs-c- /Oi /Zl)
+elseif(IOS)
+    if(CMAKE_BUILD_TYPE STREQUAL "Release")
+        add_compile_options(-g0 -Ofast)
+    endif()
 endif()
 # [/IGE]
 
