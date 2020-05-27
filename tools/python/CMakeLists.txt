@@ -24,7 +24,16 @@ if(DEFINED ANDROID_PLATFORM)
         add_compile_options(-Og)
     endif()
 elseif(MSVC)
-    add_compile_options(/MP /O1 /Os /Oy /GR- /EHs-c- /Oi /Zl)
+    add_compile_options(
+        /MP
+        "$<$<CONFIG:RELEASE>:/O1>"
+        "$<$<CONFIG:RELEASE>:/Os>"
+        "$<$<CONFIG:RELEASE>:/Oy>"
+        "$<$<CONFIG:RELEASE>:/GR->"
+        "$<$<CONFIG:RELEASE>:/EHs-c->"
+        "$<$<CONFIG:RELEASE>:/Oi>"
+        "$<$<CONFIG:RELEASE>:/Zl>"
+    )
 elseif(IOS)
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
         add_compile_options(-g0 -Ofast)
