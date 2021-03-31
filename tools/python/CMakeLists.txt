@@ -2,7 +2,12 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 project(dlib_python_bindings)
 
-file(TO_CMAKE_PATH $ENV{IGE_LIBS} IGE_LIBS)
+# [IGE]: try include conan build config
+if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    conan_basic_setup()
+endif()
+# [/IGE]
 
 # [IGE]: tweaks for platforms
 set(CMAKE_CXX_STANDARD 17)
@@ -42,17 +47,7 @@ endif()
 # [/IGE]
 
 # [IGE]: build static python binding
-set (PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Include")
-if (MSVC)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/PC")
-elseif (OSX)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Mac")
-elseif (ANDROID)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Android")
-elseif (IOS)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/IOS")
-endif ()
-
+set (PYTHON_INCLUDE_DIRS "${CONAN_INCLUDE_DIRS}")
 set(DLIB_NO_GUI_SUPPORT ON)
 # [/IGE]
 
@@ -81,7 +76,6 @@ endif()
 # [/IGE]
 
 # [IGE]: use latest pybind11
-add_subdirectory(${IGE_LIBS}/pybind11 pybind11_build)
 add_subdirectory(../../dlib dlib_build)
 # [/IGE]
 

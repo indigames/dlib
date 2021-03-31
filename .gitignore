@@ -17,3 +17,6 @@ docs/docs/python/classes.txt
 docs/docs/python/functions.txt
 
 /igeLibs
+/_ige_build
+/_ige_release
+/conanfile.py

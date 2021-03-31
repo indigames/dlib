@@ -1,0 +1,7 @@
+[requires]
+Python/3.7.6@ige/test
+numpy/1.19.5@ige/test
+pybind11/2.4.3@ige/test
+
+[generators]
+cmake
