@@ -29,16 +29,7 @@ if(DEFINED ANDROID_PLATFORM)
         add_compile_options(-Og)
     endif()
 elseif(MSVC)
-    add_compile_options(
-        /MP
-        "$<$<CONFIG:RELEASE>:/O1>"
-        "$<$<CONFIG:RELEASE>:/Os>"
-        "$<$<CONFIG:RELEASE>:/Oy>"
-        "$<$<CONFIG:RELEASE>:/GR->"
-        "$<$<CONFIG:RELEASE>:/EHs-c->"
-        "$<$<CONFIG:RELEASE>:/Oi>"
-        "$<$<CONFIG:RELEASE>:/Zl>"
-    )
+    add_compile_options(/MP)
 elseif(IOS)
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
         add_compile_options(-g0 -Ofast)
@@ -76,6 +67,7 @@ endif()
 # [/IGE]
 
 # [IGE]: use latest pybind11
+add_subdirectory(${CONAN_PYBIND11_ROOT} pybind11_build)
 add_subdirectory(../../dlib dlib_build)
 # [/IGE]
 

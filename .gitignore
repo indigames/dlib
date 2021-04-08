@@ -20,3 +20,6 @@ docs/docs/python/functions.txt
 /_ige_build
 /_ige_release
 /conanfile.py
+/tools/python/_ige_build
+/tools/python/_ige_release
+/tools/python/conanfile.py
