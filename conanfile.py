@@ -18,6 +18,9 @@ class IgeConan(ConanFile):
     short_paths = True
 
     def requirements(self):
+        self.requires("Python/3.7.6@ige/test")
+        self.requires("numpy/1.19.5@ige/test")
+        self.requires("pybind11/2.4.3@ige/test")
         if (self.settings.os == "Windows") and (self.name != "zlib"):
             self.requires("zlib/1.2.11@ige/test")
 
