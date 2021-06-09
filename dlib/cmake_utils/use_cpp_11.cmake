@@ -102,10 +102,10 @@ if (NOT COMPILER_CAN_DO_CPP_11)
    CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
    if(COMPILER_SUPPORTS_CXX11)
       message(STATUS "C++11 activated (compiler doesn't have full C++11 support).")
-      target_compile_options(${target_name} PUBLIC "-std=c++11")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11") # [IGE]: fix '-std=c++11' not allowed with 'C/ObjC'
    elseif(COMPILER_SUPPORTS_CXX0X)
       message(STATUS "C++0x activated (compiler doesn't have full C++11 support).")
-      target_compile_options(${target_name} PUBLIC "-std=c++0x")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x") # [IGE]: fix '-std=c++11' not allowed with 'C/ObjC'
    endif()
 endif()
 
