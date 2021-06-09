@@ -2,16 +2,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 project(dlib_python_bindings)
 
-# [IGE]: try include conan build config
-if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    conan_basic_setup()
-endif()
-# [/IGE]
-
-# [IGE]: tweaks for platforms
-set(CMAKE_CXX_STANDARD 17)
-
 if(DEFINED ANDROID_PLATFORM)
     set (ANDROID 1)
     if(ANDROID_ABI STREQUAL "armeabi-v7a")
@@ -38,7 +28,8 @@ endif()
 # [/IGE]
 
 # [IGE]: build static python binding
-set (PYTHON_INCLUDE_DIRS "${CONAN_INCLUDE_DIRS}")
+find_package(Python REQUIRED)
+set (PYTHON_INCLUDE_DIRS "${Python_INCLUDE_DIRS}")
 set(DLIB_NO_GUI_SUPPORT ON)
 # [/IGE]
 
@@ -67,7 +58,8 @@ endif()
 # [/IGE]
 
 # [IGE]: use latest pybind11
-add_subdirectory(${CONAN_PYBIND11_ROOT} pybind11_build)
+find_package(pybind11 REQUIRED)
+add_subdirectory("${pybind11_INCLUDE_DIR}/.." pybind11_build)
 add_subdirectory(../../dlib dlib_build)
 # [/IGE]
 
@@ -123,3 +115,4 @@ else()
    target_link_libraries(dlib_python PRIVATE dlib::dlib)
 endif()
 # [/IGE]
+
